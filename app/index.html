@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-        <title>AngularJS Skeleton</title>
+        <title>Tecnomotriz - Inventario</title>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="src/css/app.css"/>
         <script data-main="etc/require-config.js" src="lib/vendor/requirejs/require.js"></script>
     </head>
 
-    <body ng-app='myapp'>
-        <div>
-            <span class="glyphicon glyphicon-asterisk"></span>
-            <input ng-model='test'/> {{test}}
+    <body class="container-fluid">
+        <nav class="row">
+            <div ng-include="'src/partials/common/navbar.html'"></div>
+        </nav>
+
+        <div class="row">
+            <div class="col-sm-12" ng-controller='InventoryCtrl as inventoryCtrl' ng-init='inventoryCtrl.init()'>
+                <div ng-include="'src/js/Inventory/partials/ItemTable.html'"></div>
+            </div>
         </div>
     </body>
 </html>

@@ -8,7 +8,6 @@ var pathToModule = function(path) {
 Object.keys(window.__karma__.files).forEach(function(file) {
   if (TEST_REGEXP.test(file)) {
     // Normalize paths to RequireJS module names.
-    console.log(file, pathToModule(file));
     allTestFiles.push(pathToModule(file));
   }
 });
@@ -19,8 +18,7 @@ require.config({
 
    paths: {
        angular: 'lib/vendor/angular/angular.min',
-       uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min',
-       example: 'src/js/example/example'
+       uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min'
    },
 
    shim: {

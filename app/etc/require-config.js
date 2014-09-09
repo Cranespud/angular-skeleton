@@ -1,12 +1,19 @@
+'use strict';
 require.config({
   baseUrl: './',
 
    paths: {
+       // libs
        app: 'boot/app',
-       angular: 'lib/vendor/angular/angular.min',
+       angular: 'lib/vendor/angular/angular',
        uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min',
-       testme: 'app/src/js/testme'
+       bootstrap: 'lib/vendor/bootstrap/dist/js/bootstrap.min',
+       jquery: 'lib/vendor/jquery/dist/jquery.min',
    },
+
+    packages: [
+        {name: 'InventoryPkg', location: 'src/js/Inventory'}
+    ],
 
    shim: {
        angular: {
@@ -14,12 +21,18 @@ require.config({
        },
        uiBootstrap: {
            deps: ['angular']
+       },
+       bootstrap: {
+           deps: ['jquery']
+       },
+       jquery: {
+           exports: 'jQuery'
        }
    }
 });
 
 
 // bootstrap the app
-define(['app'], function(angular, app) {
-
+define(['app', 'angular', 'jquery', 'bootstrap'], function(app) {
+    angular.bootstrap(document, [app.name]);
 });

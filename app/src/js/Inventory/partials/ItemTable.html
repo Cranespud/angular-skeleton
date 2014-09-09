@@ -1,0 +1,75 @@
+<div class='row'>
+    <div class='col-sm-3'>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+            <span style="color: green" class="glyphicon glyphicon-plus"></span> Agregar
+        </button>
+        <button type="button" class="btn btn-default">
+            <span style="color: red" class="glyphicon glyphicon-remove"></span> Eliminar
+        </button>
+    </div>
+
+    <div ng-include="'src/js/Inventory/partials/addItemModal.html'"></div>
+
+    <div class='col-sm-6 text-center'>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default" ng-click="itemType='materiales'">Materiales</button>
+          <button type="button" class="btn btn-default" ng-click="itemType='repuestos'">Respuestos</button>
+          <button type="button" class="btn btn-default" ng-click="itemType=''">Todos</button>
+        </div>
+    </div>
+
+    <div class='col-sm-3'>
+    </div>
+</div>
+
+<div class="row">
+    <div class='col-sm-12'>
+
+        <div class="table-responsive">
+            <table class="table items-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>C&oacute;digo</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Neto</th>
+                        <th>Descuento</th>
+                        <th>Proveedor</th>
+                    </tr>
+                </thead>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            {{inventoryCtrl.numPages}}
+                            <pagination
+                                direction-links="false" total-items="3000"
+                                ng-model="inventoryCtrl.currentPage"
+                                items-per-page="inventoryCtrl.itemsPerPage"
+                                ng-change="inventoryCtrl.onPageChanged()">
+                            </pagination>
+                        </td>
+                    </tr>
+                </tfoot>
+
+                <tbody>
+                  <tr class="animate-repeat" ng-repeat="row in filteredList = (inventoryCtrl.rows | filter:{type: itemType})">
+                      <td class="{{row.class}}">{{$index + 1}} <input type="checkbox"/></td>
+                      <td class="{{row.class}}">{{row.code}}</td>
+                      <td class="{{row.class}}">{{row.description}}</td>
+                      <td class="{{row.class}}">{{row.unitPrice}}</td>
+                      <td class="{{row.class}}">{{row.netPrice}}</td>
+                      <td class="{{row.class}}">{{row.discount}}</td>
+                      <td class="{{row.class}}">{{row.provider}}</td>
+                  </tr>
+                  <tr ng-hide="filteredList.length">
+                      <td colspan="7" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>
