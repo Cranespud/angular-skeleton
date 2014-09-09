@@ -1,0 +1,33 @@
+{
+  "name": "angular-skeleton",
+  "version": "0.0.0",
+  "description": "Skeleton for an angular app with RequireJS",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "AngularJS",
+    "RequireJS",
+    "Bootstrap3"
+  ],
+  "authors": [
+    "Cranespud"
+  ],
+  "license": "LGPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs-text": "~2.0.12",
+    "requirejs": "~2.1.15",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.2.0",
+    "angular": "~1.2.23",
+    "angular-bootstrap": "~0.11.0"
+  }
+}

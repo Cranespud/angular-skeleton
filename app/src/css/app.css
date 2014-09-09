@@ -1,0 +1,7 @@
+@import "../../lib/vendor/bootstrap/dist/css/bootstrap.min.css";
+/**
+ *  Defines global variables and mixins to be used throughout the app
+ */
+body {
+  background-color: #ececec;
+}
