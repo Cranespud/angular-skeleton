@@ -1,38 +1,42 @@
 'use strict';
 require.config({
-  baseUrl: './',
+    baseUrl: './',
+    paths: {
+        // libs
+        text: 'lib/vendor/requirejs-text/text',
+        angular: 'lib/vendor/angular/angular',
+        jquery: 'lib/vendor/jquery/dist/jquery.min',
+        bootstrap: 'lib/vendor/bootstrap/dist/js/bootstrap.min',
+        uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+        uiRouter: 'lib/vendor/angular-ui-router/release/angular-ui-router.min',
 
-   paths: {
-       // libs
-       app: 'boot/app',
-       angular: 'lib/vendor/angular/angular',
-       uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min',
-       bootstrap: 'lib/vendor/bootstrap/dist/js/bootstrap.min',
-       jquery: 'lib/vendor/jquery/dist/jquery.min',
-   },
-
+        // app
+        app: 'boot/app',
+        appRoutes: 'etc/routes',
+    },
     packages: [
         {name: 'InventoryPkg', location: 'src/js/Inventory'}
     ],
-
-   shim: {
-       angular: {
-           exports: 'angular'
-       },
-       uiBootstrap: {
-           deps: ['angular']
-       },
-       bootstrap: {
-           deps: ['jquery']
-       },
-       jquery: {
-           exports: 'jQuery'
-       }
-   }
+    shim: {
+        angular: {
+            exports: 'angular'
+        },
+        uiBootstrap: {
+            deps: ['angular']
+        },
+        jquery: {
+            exports: 'jQuery'
+        },
+        bootstrap: {
+            deps: ['jquery']
+        },
+        uiRouter: {
+            deps: ['angular']
+        }
+    }
 });
 
-
 // bootstrap the app
-define(['app', 'angular', 'jquery', 'bootstrap'], function(app) {
-    angular.bootstrap(document, [app.name]);
+define(['app', 'angular'], function(app, angular) {
+      angular.bootstrap(document, [app.name]);
 });

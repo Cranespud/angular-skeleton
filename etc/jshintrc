@@ -34,13 +34,12 @@
     "shadow" : false, // Allows re-define variables later in code e.g. `var x=1; x=2;`.
     "supernew" : false, // Tolerate `new function () { ... };` and `new Object;`.
     "undef" : true, // Require all non-global variables be declared before they are used.
-
+    "unused": false, //This option warns when you define and never use your variables.
 
     // Personal styling preferences.
     "newcap" : true, // Require capitalization of all constructor functions e.g. `new F()`.
     "noempty" : true, // Prohibit use of empty blocks.
     "nonew" : true, // Prohibit use of constructors for side-effects.
-    "onevar" : false, // Allow only one `var` statement per function.
     "plusplus" : false, // Prohibit use of `++` & `--`.
     "sub" : true, // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
     "indent" : 4 // Specify indentation spacing

@@ -15,9 +15,10 @@
         </nav>
 
         <div class="row">
-            <div class="col-sm-12" ng-controller='InventoryCtrl as inventoryCtrl' ng-init='inventoryCtrl.init()'>
-                <div ng-include="'src/js/Inventory/partials/ItemTable.html'"></div>
-            </div>
+            <section ui-view class="col-sm-12"></section>
+<!--            <div class="col-sm-12" ng-controller='InventoryCtrl as inventoryCtrl' ng-init='inventoryCtrl.init()'>
+                <div ng-include=" 'Inventory/ItemTable.html' "></div>
+            </div>-->
         </div>
     </body>
 </html>

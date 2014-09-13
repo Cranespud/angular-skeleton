@@ -3,6 +3,8 @@
 /**
  *  Defines global variables and mixins to be used throughout the app
  */
+/* line 6, /home/cranespud/data/angular-skeleton/app/src/less/variables.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/cranespud\/data\/angular-skeleton\/app\/src\/less\/variables\.less}line{font-family:\000036}}
 body {
   background-color: #ececec;
 }

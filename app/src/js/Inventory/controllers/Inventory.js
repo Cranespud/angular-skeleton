@@ -1,14 +1,19 @@
 define(['angular', '../module'], function(angular, module) {
     'use strict';
 
-    module.controller('InventoryCtrl', ['$scope', InventoryCtrl]);
-
-    function InventoryCtrl($scope) {
+    function InventoryCtrl($scope, $modal) {
+        this.scope = $scope;
+        this.modalSrv = $modal;
         this.rows = [];
         this.itemsPerPage = 300;
         this.currentPage = 1;
-        this.scope = $scope;
-    };
+        this.itemTypes = [
+            {name: 'material', label: 'Materiales'},
+            {name: 'part', label: 'Repuestos'}
+        ];
+        this.filteringByType = this.itemTypes[0].name;
+
+    }
 
     InventoryCtrl.prototype.init = function() {
         this.getRows();
@@ -20,7 +25,7 @@ define(['angular', '../module'], function(angular, module) {
     InventoryCtrl.prototype.getRows = function() {
         var
             colors = ['active', 'success', 'warning', 'danger', 'info'],
-            type = ['materiales', 'repuestos', 'repuestos', 'materiales', 'repuestos'];
+            type = ['material', 'part', 'part', 'material', 'material'];
 
         for(var i = 0; i < colors.length; i++) {
             this.rows.push({
@@ -35,4 +40,39 @@ define(['angular', '../module'], function(angular, module) {
             });
         }
     };
+
+    InventoryCtrl.prototype.filterByType = function(typeName) {
+        this.filteringByType = typeName;
+    };
+
+    InventoryCtrl.prototype._openItemModal = function(options) {
+        return this.modalSrv.open({
+            templateUrl: 'Inventory/' + this.filteringByType + 'ItemModal.html',
+            controller: null,
+            resolve: {
+              item: function () {
+                return options.item;
+              }
+            }
+        });
+    };
+
+    InventoryCtrl.prototype.addItemModal = function() {
+        var modalInstance = this._openItemModal({item: {}});
+    };
+
+    InventoryCtrl.prototype.editItemModal = function() {
+        var
+        selectedItem = this.getSelectedItem() || {};
+        modalInstance = this._openItemModal({item: selectedItem});
+    };
+
+    InventoryCtrl.prototype.editItemModal = function() {
+        var
+        selectedItem = this.getSelectedItem() || {};
+        modalInstance = this._openItemModal({item: selectedItem});
+    };
+
+
+    return module.controller('InventoryCtrl', ['$scope', '$modal', InventoryCtrl]);
 });
