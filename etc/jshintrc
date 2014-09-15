@@ -5,7 +5,8 @@
 
     "predef" : [ // Custom globals.
         "define",
-        "require"
+        "require",
+        "document"
     ],
 
     // Development.

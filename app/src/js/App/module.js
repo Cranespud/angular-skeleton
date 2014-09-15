@@ -3,6 +3,7 @@ define([
     'uiBootstrap',
     'uiRouter'
 ], function(angular) {
+    'use strict';
 
     var app = angular.module('myApp', [
         'ui.bootstrap',

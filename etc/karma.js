@@ -10,7 +10,6 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'requirejs'],
 
-
     // list of files / patterns to load in the browser
     files: [
       'test/unit/test-main.js', // this one should be included in an script tag
@@ -38,7 +37,7 @@ module.exports = function(config) {
     // generate coverage info
     coverageReporter: {
         type: 'html',
-        dir: 'var/coverage'
+        dir: '../var/coverage'
     },
 
     // level of logging

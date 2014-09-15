@@ -1,7 +1,7 @@
-nbproject/
 node_moddules/private
-var/
 app/lib/vendor/
 node_modules/
+nbproject/
 app/tmp
 dist/
+var/
