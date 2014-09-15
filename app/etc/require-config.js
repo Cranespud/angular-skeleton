@@ -15,8 +15,7 @@ require.config({
 
         // app
         appConf: 'etc/app.conf',
-        appRoutes: 'etc/routes',
-        //requireConfig: 'etc/require-config'
+        appRoutes: 'etc/routes'
     },
 
     packages: [
