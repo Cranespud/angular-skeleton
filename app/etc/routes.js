@@ -1,35 +1,28 @@
-define(function(require) {
+define(['require', 'appConf'], function (require, appConf) {
+    'use strict';
 
     return ['$stateProvider', '$locationProvider', '$urlRouterProvider',
-    function($stateProvider, $locationProvider, $urlRouterProvider) {
-        $locationProvider.html5Mode(true);
+        function ($stateProvider, $locationProvider, $urlRouterProvider) {
+            $locationProvider.html5Mode(true);
 
+            $urlRouterProvider.otherwise(appConf.baseUrl + '/error');
 
-        $urlRouterProvider.otherwise('/error');
+            $stateProvider.state('home', {
+                url: appConf.baseUrl + '/',
+                templateUrl: 'App/home.html',
+                controller: 'MainCtrl as mainCtrl'
+            });
 
-        $stateProvider.state('home', {
-            url: '/',
-            template: require('text!InventoryPkg/partials/ItemTable.html'),
-            controller: 'InventoryCtrl as inventoryCtrl'
-        });
+            $stateProvider.state('page1', {
+                url: appConf.baseUrl + '/page1',
+                templateUrl: 'App/page1.html',
+                controller: 'MainCtrl as mainCtrl'
+            });
 
-        $stateProvider.state('inventory', {
-            url: '/inventario',
-            template: require('text!InventoryPkg/partials/ItemTable.html'),
-            controller: 'InventoryCtrl as inventoryCtrl'
-        });
-
-        $stateProvider.state('alarms', {
-            url: '/alarms',
-            template: require('text!InventoryPkg/partials/ItemTable.html'),
-            controller: 'InventoryCtrl as inventoryCtrl'
-        });
-
-        /*$stateProvider.state('404Error', {
-            url: '/error',
-            template: require('text!InventoryPkg/partials/partItemModal.html'),
-            controller: 'InventoryCtrl as inventoryCtrl'
-        });*/
+            $stateProvider.state('page2', {
+                url: appConf.baseUrl + '/page2',
+                templateUrl: 'App/page2.html',
+                controller: 'MainCtrl as mainCtrl'
+            });
     }];
-
 });

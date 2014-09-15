@@ -1,6 +1,8 @@
 'use strict';
+
 require.config({
     baseUrl: './',
+
     paths: {
         // libs
         text: 'lib/vendor/requirejs-text/text',
@@ -9,14 +11,18 @@ require.config({
         bootstrap: 'lib/vendor/bootstrap/dist/js/bootstrap.min',
         uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min',
         uiRouter: 'lib/vendor/angular-ui-router/release/angular-ui-router.min',
+        lodash: 'lib/vendor/lodash/dist/lodash.min',
 
         // app
-        app: 'boot/app',
+        appConf: 'etc/app.conf',
         appRoutes: 'etc/routes',
+        //requireConfig: 'etc/require-config'
     },
+
     packages: [
-        {name: 'InventoryPkg', location: 'src/js/Inventory'}
+        {name: 'AppPkg', location: 'src/js/App'}
     ],
+
     shim: {
         angular: {
             exports: 'angular'
@@ -32,11 +38,13 @@ require.config({
         },
         uiRouter: {
             deps: ['angular']
+        },
+        lodash: {
+            exports: '_'
         }
     }
 });
 
-// bootstrap the app
-define(['app', 'angular'], function(app, angular) {
-      angular.bootstrap(document, [app.name]);
+require(['AppPkg'], function(app) {
+    app.init();
 });
