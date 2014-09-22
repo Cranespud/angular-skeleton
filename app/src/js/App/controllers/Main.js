@@ -2,7 +2,7 @@ define(['../module'], function(module) {
     'use strict';
 
     function MainCtrl($scope) {
-        this.name = '';
+        this.name = 'my test';
         this.upperCaseName = '';
     }
 

@@ -5,6 +5,7 @@ module.exports = function (grunt) {
 
 
     var appBase = 'app';
+    var requireConfig = JSON.stringify(eval(grunt.file.read('app/etc/require.conf.js')));
 
     // Project configuration.
     grunt.initConfig({
@@ -15,7 +16,8 @@ module.exports = function (grunt) {
             appTmp: appBase + '/tmp',
             appLib: appBase + '/lib',
             appSrc: appBase + '/src',
-            appConf: appBase + '/etc'
+            appConf: appBase + '/etc',
+            appTests: appBase + '/test'
         },
         // REPLACE
         replace: {
@@ -24,7 +26,7 @@ module.exports = function (grunt) {
                 dest: '<%= config.appBase %>/index.html',
                 replacements: [
                     {from: /\$APP_CSS/, to: "tmp/css/app.css"},
-                    {from: /\$APP_DATA_MAIN/, to: "etc/require-config.js"},
+                    {from: /\$APP_DATA_MAIN/, to: "tmp/boot.js"},
                     {from: /\$APP_JS/, to: "lib/vendor/requirejs/require.js"}
                 ]
             },
@@ -35,6 +37,20 @@ module.exports = function (grunt) {
                     {from: /\$APP_CSS/, to: "css/app.css"},
                     {from: /\$APP_DATA_MAIN/, to: ""},
                     {from: /\$APP_JS/, to: "js/app.js"}
+                ]
+            },
+            karmaRequireConf: {
+                src: ['etc/tpls/karma-test-main.tpl.js'],
+                dest: '<%= config.appTests %>/unit/test-main.js',
+                replacements: [
+                    {from: /\$REQUIREJS_CONFIG/, to: requireConfig},
+                ]
+            },
+            bootRequireConf: {
+                src: ['etc/tpls/boot.tpl.js'],
+                dest: '<%= config.appTmp %>/boot.js',
+                replacements: [
+                    {from: /\$REQUIREJS_CONFIG/, to: requireConfig},
                 ]
             }
         },
@@ -69,7 +85,7 @@ module.exports = function (grunt) {
         // KARMA
         karma: {
             unit: {
-                configFile: 'etc/karma.js'
+                configFile: 'etc/karma.conf.js'
             }
         },
         // PROTRACTOR
@@ -85,14 +101,15 @@ module.exports = function (grunt) {
             optimize: {
                 options: {
                     baseUrl: 'app',
-                    name: 'AppPkg', // I don't really understand this
-                    mainConfigFile: '<%= config.appConf %>/require-config.js',
+                    name: 'tmp/boot', // I don't really understand this
+                    mainConfigFile: '<%= config.appTmp %>/boot.js',
                     out: '<%= config.appDist %>/js/app.js',
-                    include: ['lib/vendor/requirejs/require.js', 'etc/require-config.js'],
+                    include: ['lib/vendor/requirejs/require.js'],
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     exclude: ['etc/app.conf.js'],
-                    optimize: 'uglify2'
+                    optimize: 'none'
+                    //optimize: 'uglify2'
                 }
             }
         },
@@ -119,6 +136,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('develop', ['replace:dev', 'less:dev']);
-    grunt.registerTask('dist', ['replace:dist', 'less:dist', 'copy:dist', 'requirejs:optimize']);
+    grunt.registerTask('develop', ['replace:dev', 'less:dev', 'replace:bootRequireConf']);
+    grunt.registerTask('dist', ['replace:dist', 'replace:bootRequireConf', 'less:dist', 'copy:dist', 'requirejs:optimize']);
+    grunt.registerTask('unitTest', ['replace:karmaRequireConf', 'karma:unit']);
 };

@@ -13,6 +13,12 @@ define(['require', 'appConf'], function (require, appConf) {
                 controller: 'MainCtrl as mainCtrl'
             });
 
+            $stateProvider.state('home2', {
+                url: appConf.baseUrl + '',
+                templateUrl: 'App/home.html',
+                controller: 'MainCtrl as mainCtrl'
+            });
+
             $stateProvider.state('page1', {
                 url: appConf.baseUrl + '/page1',
                 templateUrl: 'App/page1.html',

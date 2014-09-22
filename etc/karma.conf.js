@@ -11,15 +11,18 @@ module.exports = function(config) {
     frameworks: ['jasmine', 'requirejs'],
 
     // list of files / patterns to load in the browser
-    files: [
+   files: [
       'test/unit/test-main.js', // this one should be included in an script tag
       {pattern: 'src/js/**/*.js', included: false},
+      {pattern: 'src/js/**/*.html', included: false},
       {pattern: 'test/unit/**/*.spec.js', included: false},
-      {pattern: 'lib/**/*.min.js', included: false}
-    ],
+      {pattern: 'lib/**/*.js', included: false},
+      {pattern: 'etc/**/*.conf.js', included: false},
+   ],
 
     // list of files to exclude
     exclude: [
+        'lib/**/test/**/*.js'
     ],
 
     // test results reporter to use
