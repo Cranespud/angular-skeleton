@@ -5,12 +5,13 @@ module.exports = function (grunt) {
 
 
     var appBase = 'app';
-    var requireConfig = JSON.stringify(eval(grunt.file.read('app/etc/require.conf.js')));
+    var requireConfig = JSON.stringify(eval(grunt.file.read('app/etc/require.conf.js')), null, '\t');
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         config: {
+            baseurl: appConfig.baseUrl,
             appDist: 'dist',
             appBase: appBase,
             appTmp: appBase + '/tmp',
@@ -39,14 +40,14 @@ module.exports = function (grunt) {
                     {from: /\$APP_JS/, to: "js/app.js"}
                 ]
             },
-            karmaRequireConf: {
+            requireConfOnKarma: {
                 src: ['etc/tpls/karma-test-main.tpl.js'],
                 dest: '<%= config.appTests %>/unit/test-main.js',
                 replacements: [
                     {from: /\$REQUIREJS_CONFIG/, to: requireConfig},
                 ]
             },
-            bootRequireConf: {
+            requireConfOnBoot: {
                 src: ['etc/tpls/boot.tpl.js'],
                 dest: '<%= config.appTmp %>/boot.js',
                 replacements: [
@@ -126,17 +127,18 @@ module.exports = function (grunt) {
         },
         // WATCH
         watch: {//might need: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+            requireConf: {
+                files: ['<%= config.appConf %>/require.conf.js'],
+                tasks: ['replace:requireConfOnBoot', 'replace:requireConfOnBoot']
+            },
             less: {
                 files: ['<%= config.appSrc %>/less/*.less'],
-                tasks: ['less'],
-                options: {
-                    spawn: false
-                }
+                tasks: ['less']
             }
         }
     });
 
-    grunt.registerTask('develop', ['replace:dev', 'less:dev', 'replace:bootRequireConf']);
-    grunt.registerTask('dist', ['replace:dist', 'replace:bootRequireConf', 'less:dist', 'copy:dist', 'requirejs:optimize']);
-    grunt.registerTask('unitTest', ['replace:karmaRequireConf', 'karma:unit']);
+    grunt.registerTask('develop', ['replace:dev', 'less:dev', 'replace:requireConfOnBoot']);
+    grunt.registerTask('dist', ['replace:dist', 'replace:requireConfOnBoot', 'less:dist', 'copy:dist', 'requirejs:optimize']);
+    grunt.registerTask('unitTest', ['replace:requireConfOnKarma', 'karma:unit']);
 };
