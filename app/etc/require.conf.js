@@ -7,7 +7,7 @@
         paths: {
             // libs
             text: 'lib/vendor/requirejs-text/text',
-            angular: 'lib/vendor/angular/angular.min',
+            angular: 'lib/vendor/angular/angular',
             jquery: 'lib/vendor/jquery/dist/jquery.min',
             bootstrap: 'lib/vendor/bootstrap/dist/js/bootstrap.min',
             uiBootstrap: 'lib/vendor/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -21,8 +21,7 @@
         },
 
         packages: [
-            {name: 'AppPkg', location: 'src/js/App'},
-            {name: 'CososPkg', location: 'src/js/Cosos'}
+            {name: 'AppPkg', location: 'src/js/App'}
         ],
 
         shim: {

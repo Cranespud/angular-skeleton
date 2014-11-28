@@ -11,7 +11,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         config: {
-            baseurl: appConfig.baseUrl,
             appDist: 'dist',
             appBase: appBase,
             appTmp: appBase + '/tmp',
@@ -44,14 +43,14 @@ module.exports = function (grunt) {
                 src: ['etc/tpls/karma-test-main.tpl.js'],
                 dest: '<%= config.appTests %>/unit/test-main.js',
                 replacements: [
-                    {from: /\$REQUIREJS_CONFIG/, to: requireConfig},
+                    {from: /\$REQUIREJS_CONFIG/, to: requireConfig}
                 ]
             },
             requireConfOnBoot: {
                 src: ['etc/tpls/boot.tpl.js'],
                 dest: '<%= config.appTmp %>/boot.js',
                 replacements: [
-                    {from: /\$REQUIREJS_CONFIG/, to: requireConfig},
+                    {from: /\$REQUIREJS_CONFIG/, to: requireConfig}
                 ]
             }
         },
@@ -109,8 +108,8 @@ module.exports = function (grunt) {
                     findNestedDependencies: true,
                     preserveLicenseComments: false,
                     exclude: ['etc/app.conf.js'],
-                    optimize: 'none'
-                    //optimize: 'uglify2'
+                    //optimize: 'none'
+                    optimize: 'uglify2'
                 }
             }
         },
@@ -123,6 +122,18 @@ module.exports = function (grunt) {
                     {expand: true, cwd: '<%= config.appBase %>', src: ['img/**/*'], dest: '<%= config.appDist %>'},
                     {expand: true, cwd: '<%= config.appBase %>', src: ['.htaccess'], dest: '<%= config.appDist %>'}
                 ]
+            }
+        },
+        // NG-ANNOTATE
+        ngAnnotate: {
+            options: { singleQuotes: true },
+            add: {
+                options: {add: true, remove: true},
+                files: [{ add: true, expand: true, src: ['<%= config.appSrc %>/**/*.js'] }]
+            },
+            remove: {
+                options: {add: false, remove: true},
+                files: [{  expand: true, src: ['<%= config.appSrc %>/**/*.js'] }]
             }
         },
         // WATCH
@@ -139,6 +150,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('develop', ['replace:dev', 'less:dev', 'replace:requireConfOnBoot']);
-    grunt.registerTask('dist', ['replace:dist', 'replace:requireConfOnBoot', 'less:dist', 'copy:dist', 'requirejs:optimize']);
+    grunt.registerTask('dist', ['replace:dist', 'replace:requireConfOnBoot', 'less:dist', 'copy:dist', 'ngAnnotate:add',
+        'requirejs:optimize', 'ngAnnotate:remove']);
     grunt.registerTask('unitTest', ['replace:requireConfOnKarma', 'karma:unit']);
 };

@@ -29,7 +29,8 @@
     "watch": "~0.11.0",
     "grunt-contrib-requirejs": "~0.4.4",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-text-replace": "~0.3.12"
+    "grunt-text-replace": "~0.3.12",
+    "grunt-ng-annotate": "~0.7.0"
   },
   "scripts": {
     "postinstall": "webdriver-manager update",
